@@ -213,18 +213,38 @@ object Theming {
         val mediaPlayerHolder = MediaPlayerHolder.getInstance()
         return when (action) {
             GoConstants.PLAY_PAUSE_ACTION -> if (mediaPlayerHolder.isPlaying) {
-                R.drawable.ic_pause
+                if (isNotification) {
+                    R.drawable.ic_pause_notification
+                }else {
+                    R.drawable.ic_pause
+                }
             } else {
-                R.drawable.ic_play
+                if (isNotification) {
+                    R.drawable.ic_play_notification
+                }else {
+                    R.drawable.ic_play
+                }
             }
             GoConstants.REPEAT_ACTION -> if (isNotification) {
                 getRepeatIcon(isNotification = true)
             } else {
                 R.drawable.ic_repeat
             }
-            GoConstants.PREV_ACTION -> R.drawable.ic_skip_previous
-            GoConstants.NEXT_ACTION -> R.drawable.ic_skip_next
-            GoConstants.CLOSE_ACTION -> R.drawable.ic_close
+            GoConstants.PREV_ACTION -> if (isNotification) {
+                R.drawable.ic_skip_previous_notification
+            } else {
+                R.drawable.ic_skip_previous
+            }
+            GoConstants.NEXT_ACTION -> if (isNotification) {
+                R.drawable.ic_skip_next_notification
+            } else {
+                R.drawable.ic_skip_next
+            }
+            GoConstants.CLOSE_ACTION -> if (isNotification) {
+                R.drawable.ic_close_notification
+            } else {
+                R.drawable.ic_close
+            }
             GoConstants.FAST_FORWARD_ACTION -> R.drawable.ic_fast_forward
             GoConstants.REWIND_ACTION -> R.drawable.ic_fast_rewind
             GoConstants.FAVORITE_ACTION -> if (isNotification) {

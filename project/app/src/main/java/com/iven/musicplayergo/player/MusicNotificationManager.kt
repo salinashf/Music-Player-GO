@@ -8,8 +8,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v4.media.MediaMetadataCompat
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -99,7 +101,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
             mNotificationBuilder.setOngoing(mMediaPlayerHolder.isPlaying)
             updatePlayPauseAction()
             with(mNotificationManagerCompat) {
-                notify(GoConstants.NOTIFICATION_ID, mNotificationBuilder.build())
+                if (ActivityCompat.checkSelfPermission( playerService.baseContext, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    notify(GoConstants.NOTIFICATION_ID, mNotificationBuilder.build())
+                }
             }
         }
     }
@@ -181,7 +185,9 @@ class MusicNotificationManager(private val playerService: PlayerService) {
                 .bigText(playerService.getString(R.string.error_fs_not_allowed)))
             .priority = NotificationCompat.PRIORITY_DEFAULT
         with(NotificationManagerCompat.from(playerService)) {
-            notify(GoConstants.NOTIFICATION_ERROR_ID, notificationBuilder.build())
+            if (ActivityCompat.checkSelfPermission( playerService.baseContext, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                notify(GoConstants.NOTIFICATION_ERROR_ID, notificationBuilder.build())
+            }
         }
     }
 
