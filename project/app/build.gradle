@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('B:\\WorkSpaceKotlin\\Music-Player-GO\\project\\key\\apk\\KeyMaster.jks')
+            storePassword '123456'
+            keyPassword '654321'
+            keyAlias 'MasterA'
+        }
+    }
     compileSdkVersion 33
     //noinspection GradleDependency
     defaultConfig {
@@ -33,7 +41,7 @@ android {
         }
         debug {
             applicationIdSuffix ".debug"
-            resValue "string", "app_name", "@string/app_name_debug"
+            resValue "string", "app_name", "MPGO debug"
             debuggable true
         }
     }
